@@ -1,0 +1,15 @@
+FROM debian:buster-slim
+MAINTAINER uss-yosemite
+
+RUN apt-get update
+RUN apt-get install -y openjdk-11-jre curl
+RUN apt-get install -y maven
+RUN apt-get install -y make
+
+ADD outputs/QuoteServer.jar /app/QuoteServer.jar
+ADD quotesdb.sqlite /app/
+
+WORKDIR /app
+EXPOSE 5000
+VOLUME /data
+CMD ["java", "-jar", "QuoteServer.jar"]

@@ -1,8 +1,8 @@
-import 'package:app/pages/loading_screen.dart';
+import 'package:app/views/loading_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:app/pages/add_quotes.dart';
-import 'package:app/pages/home.dart';
-import 'package:app/pages/single_quote.dart';
+import 'package:app/views/add_quotes.dart';
+import 'package:app/views/home.dart';
+import 'package:app/views/single_quote.dart';
 
 void main() => runApp(MaterialApp(
   initialRoute: '/',
