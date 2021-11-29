@@ -2,6 +2,7 @@ import 'package:app/models/quotes.dart';
 import 'package:app/controllers/quote_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FormWidgetBois extends StatefulWidget {
   const FormWidgetBois({Key? key}) : super(key: key);
@@ -18,10 +19,9 @@ class _FormWidgetBoisState extends State<FormWidgetBois> {
   void uploadQuote(quote, author) async {
     Quote brandNewQuote = Quote(text: quote.text, author: author.text);
     QuoteController quoteController = QuoteController();
-    print("author ${brandNewQuote.author}");
-    print("text ${brandNewQuote.text}");
-    await quoteController.addNewQuote(author: brandNewQuote.author, quote: brandNewQuote.text);
+    await quoteController.addNewQuote(author: brandNewQuote.author, quote: brandNewQuote.text).then((value) => Provider.of<Quotes>(context, listen: false).addQuote(value));
 
+    // Provider
     Navigator.pop(context);
   }
 

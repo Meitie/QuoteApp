@@ -2,6 +2,7 @@ import 'package:app/models/quotes.dart';
 import 'package:app/controllers/quote_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({Key? key}) : super(key: key);
@@ -15,9 +16,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void setupQuotes() async {
     // Quote quote = Quote(author: "", text: '');
     QuoteController quoteController = QuoteController();
-    await quoteController.getDBQuotes();
+    List<Quote> bob = await quoteController.getDBQuotes();
     Navigator.pushReplacementNamed(context, '/home', arguments: {
-      'allQuotes': quoteController.allQuotes,
+      'allQuotes': bob,
     });
   }
 

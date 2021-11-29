@@ -1,5 +1,7 @@
+import 'package:app/controllers/quote_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:app/models/quotes.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,11 +14,28 @@ class _HomeState extends State<Home> {
 
   Map data = {};
 
+
+  void harryPotter() async {
+  //   data = ModalRoute.of(context)!.settings.arguments as Map;
+  //   Provider.of<Quotes>(context, listen: false).loopAddAll(data["allQuotes"]);
+  //   print(data);
+    QuoteController quoteController = QuoteController();
+    await quoteController.getDBQuotes().then((value) => Provider.of<Quotes>(context, listen: false).loopAddAll(value));
+
+
+  }
+
+
+  void initState(){
+    super.initState();
+    harryPotter();
+  }
+
   @override
   Widget build(BuildContext context) {
 
-    data = data.isNotEmpty ? data : ModalRoute.of(context)!.settings.arguments as Map;
-    List<dynamic> listedData = data["allQuotes"];
+    List<Quote> listedData = Provider.of<Quotes>(context).allQuotes;
+
 
     return Scaffold(
       appBar: AppBar(
@@ -41,13 +60,13 @@ class _HomeState extends State<Home> {
                   child: ListTile(
                     onTap: () async {
                       await Navigator.pushNamed(context, '/singleQuote', arguments: {
-                        "quote": listedData[index]["quote"],
-                        "author": listedData[index]["author"],
+                        "quote": listedData.elementAt(index).text,
+                        "author": listedData.elementAt(index).author,
                       });
                     },
                     title: Center(
                       child: Text(
-                        "\"${listedData[index]["quote"]}\"",
+                        "\"${listedData.elementAt(index).text}\"",
                         style: TextStyle(
                           fontSize: 18.0,
                           letterSpacing: 1.0,
